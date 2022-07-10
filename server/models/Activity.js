@@ -6,20 +6,10 @@ const activitySchema = new Schema({
         type: Date,
         required: true
     },
-    // // I am leaving this part commented out for now because 
-    // // I am not entirely sure how to store the duration/ending time
-    // // I currently think the best course of action is to store the ending
-    // // time in the database and have a virtual for calculating the duration.
-    // // For now, I have written out code for storing the duration as a number of milliseconds
-    // // and separately the ending time as a Date object.
-    // duration: {
-    //     type: Number,
-    //     required: true
-    // },
-    // endingTime: {
-    //     type: Date,
-    //     required: true
-    // },
+    endTime: {
+        type: Date,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -32,6 +22,10 @@ const activitySchema = new Schema({
         ref: 'Park'
     }
 });
+
+activitySchema.virtual('duration').get(function() {
+    return this.endTime - this.startTime;
+})
 
 const Activity = model('Activity', activitySchema);
 
