@@ -51,6 +51,18 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
+    setActivities: async (parent,  { activityData }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { activities: activityData },
+          { new: true }
+        );
+
+        return updatedUser;
+      }
+    },
+
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
