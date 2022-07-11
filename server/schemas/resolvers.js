@@ -1,8 +1,11 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Activity } = require('../models');
 const { signToken } = require('../utils/auth');
+const { GraphQLTimestamp } = require('graphql-scalars');
 
 const resolvers = {
+  Timestamp: GraphQLTimestamp,
+
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
@@ -13,6 +16,10 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
+    allActivities: async (parent, args) => {
+      const activitiesData = await Activity.find({}).select('-__v');
+      return activitiesData;
+    }
   },
 
   Mutation: {
@@ -51,16 +58,19 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    setActivities: async (parent,  { activityData }, context) => {
+    
+    saveActivity: async (parent, { activityId }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { activities: activityData },
+          { $push: { activities: activityId } },
           { new: true }
         );
 
         return updatedUser;
       }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
 
     removeBook: async (parent, { bookId }, context) => {
