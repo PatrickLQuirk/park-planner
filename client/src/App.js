@@ -48,6 +48,10 @@ function App() {
               path="/" 
               element={<Home />} 
             /> 
+             <Route 
+              path="/" 
+              element={<SearchBooks />} 
+            />
             <Route 
               path="/saved" 
               element={<SavedBooks />} 
