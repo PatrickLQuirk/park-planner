@@ -4,10 +4,10 @@ import Grid from '@mui/material/Grid';
 import { Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Park from './ParkCard';
-import arches from '../assets/arches.png';
-import badlands from '../assets/badlands.png';
-import glacier from '../assets/glacier.png';
-import roosevelt from '../assets/roosevelt.png';
+import arches from '../../../assets/arches.png';
+import badlands from '../../../assets/badlands.png';
+import glacier from '../../../assets/glacier.png';
+import roosevelt from '../../../assets/roosevelt.png';
 
 const parks = [
     {
