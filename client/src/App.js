@@ -1,16 +1,4 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   ApolloClient,
@@ -23,6 +11,7 @@ import { setContext } from '@apollo/client/link/context';
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
+import Home from './pages/Home';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -50,7 +39,6 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ChakraProvider>
     <ApolloProvider client={client}>
       <Router>
         <>
@@ -64,6 +52,10 @@ function App() {
               path="/saved" 
               element={<SavedBooks />} 
             />
+              <Route 
+              path="/home" 
+              element={<Home />} 
+            />
             <Route 
               path="*" 
               element={<h1 className="display-2">Wrong page!</h1>} 
@@ -72,30 +64,7 @@ function App() {
         </>
       </Router>
     </ApolloProvider>
-    </ChakraProvider>
   );
 }
 
-export default App;
-
-
-
-import React from "react";
-import { Flex } from "@chakra-ui/react";
-
-import NavigationMenu from "./components/Navbar";
-import Hero from "./components/Hero";
-import Footer from "./components/Footer";
-import LoginForm from "./components/LoginForm";
-import SignUpForm from "./components/SignupForm";
-
-const App = () => (
-  <Flex minHeight="100vh" flexDirection="column">
-    <NavigationMenu />
-    <Hero />
-    <LoginForm />
-    <SignUpForm />
-    <Footer />
-  </Flex>
-);
 export default App;
