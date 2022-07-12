@@ -78,31 +78,26 @@ function App() {
 
 export default App;
 
-function App() {
-  return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
-  );
-}
 
+
+import React from "react";
+import { Flex } from "@chakra-ui/react";
+
+import NavigationMenu from "./components/NavigationMenu";
+import Hero from "./components/Hero";
+import Copyright from "./components/Copyright";
+import Footer from "./components/Footer";
+import About from "./components/About";
+import Portfolio from "./components/Portfolio";
+
+const App = () => (
+  <Flex minHeight="100vh" flexDirection="column">
+    <NavigationMenu />
+    <Hero />
+    <Portfolio />
+    <About />
+    <Footer />
+    <Copyright />
+  </Flex>
+);
 export default App;

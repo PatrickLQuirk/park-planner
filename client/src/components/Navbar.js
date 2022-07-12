@@ -10,171 +10,158 @@ const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
-  return (
-    <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
-        <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            Google Books Search
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar'>
-            <Nav className='ml-auto'>
-              <Nav.Link as={Link} to='/'>
-                Search For Books
-              </Nav.Link>
-              {/* if user is logged in show saved books and logout */}
-              {Auth.loggedIn() ? (
-                <>
-                  <Nav.Link as={Link} to='/saved'>
-                    See Your Books
-                  </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
-                </>
-              ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      {/* set modal data up */}
-      <Modal
-        size='lg'
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        aria-labelledby='signup-modal'>
-        {/* tab container to do either signup or login component */}
-        <Tab.Container defaultActiveKey='login'>
-          <Modal.Header closeButton>
-            <Modal.Title id='signup-modal'>
-              <Nav variant='pills'>
-                <Nav.Item>
-                  <Nav.Link eventKey='login'>Login</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Tab.Content>
-              <Tab.Pane eventKey='login'>
-                <LoginForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-              <Tab.Pane eventKey='signup'>
-                <SignUpForm handleModalClose={() => setShowModal(false)} />
-              </Tab.Pane>
-            </Tab.Content>
-          </Modal.Body>
-        </Tab.Container>
-      </Modal>
-    </>
-  );
-};
-
-export default AppNavbar;
-
-
-import { ReactNode } from 'react';
-import {
-  Box,
-  Flex,
-  Avatar,
-  HStack,
-  Link,
-  IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
-  useColorModeValue,
-  Stack,
-} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-
-const Links = ['Dashboard', 'Projects', 'Team'];
-
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-    href={'#'}>
-    {children}
-  </Link>
-);
-
-export default function Simple() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  return (
-    <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <IconButton
-            size={'md'}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={'Open Menu'}
-            display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
-          />
-          <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
-            <HStack
-              as={'nav'}
-              spacing={4}
-              display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </HStack>
-          </HStack>
-          <Flex alignItems={'center'}>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={'full'}
-                variant={'link'}
-                cursor={'pointer'}
-                minW={0}>
-                <Avatar
-                  size={'sm'}
-                  src={
-                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                  }
-                />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
-              </MenuList>
-            </Menu>
-          </Flex>
-        </Flex>
-
-        {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
-            <Stack as={'nav'} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </Stack>
+  import {
+    Flex,
+    Container,
+    Link,
+    Stack,
+    Box,
+    useDisclosure,
+    Drawer,
+    DrawerOverlay,
+    DrawerBody,
+    DrawerHeader,
+    DrawerContent,
+    DrawerCloseButton
+  } from "@chakra-ui/react";
+  
+  const NavigationMenu = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    return (
+      <Flex
+        backgroundColor="blue.800"
+        justifyContent="space-between"
+        alignItems="center"
+        pt=".5rem"
+        pb=".5rem"
+        position="sticky"
+        top="0"
+        zIndex={1}
+        boxShadow="base"
+        as="nav"
+      >
+        <Container
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          maxW={["sm", "4xl"]}
+        >
+          <Link fontWeight="bold" color="white" fontSize="2xl">
+            LANDING PAGE
+          </Link>
+          <Box onClick={onOpen} display={{ base: "block", md: "none" }}>
+            <svg
+              fill="white"
+              width="12px"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+            </svg>
           </Box>
-        ) : null}
-      </Box>
-
-      <Box p={4}>Main Content Here</Box>
-    </>
-  );
-}
+          <Drawer onClose={onClose} isOpen={isOpen}>
+            <DrawerOverlay>
+              <DrawerContent backgroundColor="blue.800">
+                <DrawerCloseButton color="white" />
+                <DrawerHeader
+                  borderBottomWidth="2px"
+                  borderBottomColor="blue.700"
+                  backgroundColor="blue.900"
+                  color="blue.100"
+                >
+                  Menu
+                </DrawerHeader>
+                <DrawerBody p="0">
+                  <Stack spacing={0}>
+                    <Link
+                      color="white"
+                      fontWeight="bold"
+                      fontSize="lg"
+                      p=".8rem"
+                      paddingLeft="1.5rem"
+                      _hover={{
+                        backgroundColor: "blue.700"
+                      }}
+                    >
+                      PARKS
+                    </Link>
+                    <Link
+                      fontSize="lg"
+                      fontWeight="bold"
+                      color="white"
+                      p=".8rem"
+                      paddingLeft="1.5rem"
+                      _hover={{
+                        backgroundColor: "blue.700"
+                      }}
+                    >
+                      ABOUT
+                    </Link>
+                    <Link
+                      fontWeight="bold"
+                      fontSize="lg"
+                      color="white"
+                      p=".8rem"
+                      paddingLeft="1.5rem"
+                      _hover={{
+                        backgroundColor: "blue.700"
+                      }}
+                    >
+                      CONTACT
+                    </Link>
+                  </Stack>
+                </DrawerBody>
+              </DrawerContent>
+            </DrawerOverlay>
+          </Drawer>
+          <Stack
+            display={{ base: "none", md: "flex" }}
+            spacing={12}
+            isInline
+            ml="auto"
+            alignItems="center"
+          >
+            <Link
+              color="white"
+              fontWeight="bold"
+              fontSize="lg"
+              p=".8rem"
+              borderRadius=".5rem"
+              _hover={{
+                backgroundColor: "teal.400"
+              }}
+            >
+              PARKS
+            </Link>
+            <Link
+              fontSize="lg"
+              fontWeight="bold"
+              color="white"
+              p=".8rem"
+              borderRadius=".5rem"
+              _hover={{
+                backgroundColor: "teal.400"
+              }}
+            >
+              ABOUT
+            </Link>
+            <Link
+              fontWeight="bold"
+              fontSize="lg"
+              color="white"
+              p=".8rem"
+              borderRadius=".5rem"
+              _hover={{
+                backgroundColor: "teal.400"
+              }}
+            >
+              CONTACT
+            </Link>
+          </Stack>
+        </Container>
+      </Flex>
+    );
+  };
+  export default NavigationMenu;
+  
