@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Activity } = require('../models');
+const { User, Activity, Park } = require('../models');
 const { signToken } = require('../utils/auth');
 const { GraphQLTimestamp } = require('graphql-scalars');
 
@@ -33,7 +33,16 @@ const resolvers = {
           select: 'name _id'
         });
       return activitiesData;
-    }
+    },
+    allParks: async (parent, args) => {
+      const parksData = await Park.find({})
+        .select("-__v")
+        .populate({
+          path: 'activities',
+          select: "-__v"
+        });
+      return parksData;
+    },
   },
 
   Mutation: {
