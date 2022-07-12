@@ -9,7 +9,7 @@ const typeDefs = gql`
     email: String
     bookCount: Int
     savedBooks: [Book]
-    activities: [ID]
+    activities: [Activity]
   }
 
   type Book {
@@ -27,7 +27,13 @@ const typeDefs = gql`
     endTime: Timestamp!
     title: String!
     description: String
-    park: ID!
+    park: Park!
+  }
+
+  type Park {
+    _id: ID!
+    name: String!
+    activities: [Activity]
   }
 
   type Auth {
@@ -63,6 +69,7 @@ const typeDefs = gql`
     saveBook(bookData: BookInput!): User
     removeBook(bookId: ID!): User
     saveActivity(activityId: ID!): User
+    removeActivity(activityId: ID!): User
   }
 `;
 
