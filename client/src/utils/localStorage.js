@@ -8,7 +8,7 @@ export const getSavedActivityIds = () => {
 
 export const saveActivityIds = (activityIdArr) => {
   if (activityIdArr.length) {
-    localStorage.setItem('saved_activities', JSON.stringify(ActivityIdArr));
+    localStorage.setItem('saved_activities', JSON.stringify(activityIdArr));
   } else {
     localStorage.removeItem('saved_activities');
   }
@@ -23,7 +23,7 @@ export const removeActivityId = (activityId) => {
     return false;
   }
 
-  const updatedSavedActivityIds = savedActivityIds?.filter((savedActivityId) => savedBookId !== bookId);
+  const updatedSavedActivityIds = savedActivityIds?.filter((savedActivityId) => savedActivityId !== activityId);
   localStorage.setItem('saved_activities', JSON.stringify(updatedSavedActivityIds));
 
   return true;
