@@ -22,10 +22,10 @@ const Hero = () => (
         <Image height="sm" src={ReactImage} />
         <Stack spacing={2} alignItems="center">
           <Heading size="2xl" color="white" textAlign="center">
-            LANDING PAGE DEMO
+            Park Planner
           </Heading>
           <Heading as="h2" size="md" color="white">
-            React - Template - ChakraUI
+            Plan your trip ahead so you're not lost in the wilderness without your itinerary. 
           </Heading>
         </Stack>
       </Stack>

@@ -83,21 +83,19 @@ export default App;
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 
-import NavigationMenu from "./components/NavigationMenu";
+import NavigationMenu from "./components/Navbar";
 import Hero from "./components/Hero";
-import Copyright from "./components/Copyright";
 import Footer from "./components/Footer";
-import About from "./components/About";
-import Portfolio from "./components/Portfolio";
+import LoginForm from "./components/LoginForm";
+import SignUpForm from "./components/SignupForm";
 
 const App = () => (
   <Flex minHeight="100vh" flexDirection="column">
     <NavigationMenu />
     <Hero />
-    <Portfolio />
-    <About />
+    <LoginForm />
+    <SignUpForm />
     <Footer />
-    <Copyright />
   </Flex>
 );
 export default App;
