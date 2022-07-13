@@ -22,13 +22,33 @@ export const QUERY_ME = gql`
 `;
 
 // this query does not return the actual activity data, just the ids.
-// This query will need to be updated
 export const QUERY_ALL_PARKS = gql`
   query AllParks {
     allParks {
       _id
       name
+      description
+      img
       activities
+    }
+  }
+`;
+
+export const QUERY_SINGLE_PARK = gql`
+  query SinglePark {
+    singlePark(parkId: ID!) {
+      _id
+      name
+      description
+      img
+      activities {
+        _id
+        startTime
+        endTime
+        title
+        description
+        park
+      }
     }
   }
 `;
