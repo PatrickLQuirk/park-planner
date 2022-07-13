@@ -52,7 +52,28 @@ const Parks = () => {
                     }
                 </Grid>
             </Container>
+
+
+            <Container>
+                <Typography sx={{ fontWeight: 500, m: 3, color: 'success.main' }} variant="h6" component="div">
+                    Activities
+                </Typography>
+                <Typography sx={{ fontWeight: 600, m: 5 }} variant="h5" component="div">
+                    Select from the activities below to add to your itinerary
+                </Typography>
+                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                    {
+                        parks.map(activity => <Activity
+                            key={activity.title}
+                            park={activity}
+                        ></Activity>)
+                    }
+                </Grid>
+            </Container>
+
         </Box>
+
+        
     );
 };
 
