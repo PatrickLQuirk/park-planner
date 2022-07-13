@@ -7,6 +7,11 @@ import {
   Button,
 } from 'react-bootstrap';
 
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { REMOVE_ACTIVITY } from '../utils/mutations';
@@ -60,32 +65,34 @@ const SavedActivities = () => {
               }:`
             : 'You have no saved activities!'}
         </h2>
-        <CardColumns>
-          {userData.savedActivities?.map((activity) => {
-            return (
-              <Card key={activity.activityId} border="dark">
-                {activity.image ? (
-                  <Card.Img
-                    src={activity.image}
-                    alt={`The image for ${activity.title}`}
-                    variant="top"
-                  />
-                ) : null}
-                <Card.Body>
-                  <Card.Title>{activity.title}</Card.Title>
-                  <p className="small">Activity: {activity.park}</p>
-                  <Card.Text>{activity.description}</Card.Text>
-                  <Button
-                    className="btn-block btn-danger"
-                    onClick={() => handleDeleteActivity(activity.activityId)}
-                  >
-                    Delete this Activity!
-                  </Button>
-                </Card.Body>
-              </Card>
-            );
+        <Grid item xs={4} sm={4} md={4}>
+                <Card key={activity.activityId} sx={{ minWidth: 275, border: 0, boxShadow: 0 }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {activity.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {activity.description}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {activity.startTime}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {activity.endTime}
+                    </Typography>
+                    {Auth.loggedIn() && (
+                      <Button
+                      className="btn-block btn-danger"
+                      onClick={() => handleDeleteActivity(activity.activityId)}
+                    >
+                      Delete this Activity!
+                    </Button>
+                      )}
+                  </CardContent>
+                </Card>
+              </Grid>
+              );
           })}
-        </CardColumns>
       </Container>
     </>
   );
