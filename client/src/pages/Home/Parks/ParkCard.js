@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const ParkCard = (props) => {
     const { name, description, img } = props.park;
@@ -23,6 +24,7 @@ const ParkCard = (props) => {
                     <Typography variant="body2" color="text.secondary">
                         {description}
                     </Typography>
+                    <Button variant="contained" style={{ backgroundColor: '#5CE7ED' }}>View Activities</Button>
                 </CardContent>
             </Card>
         </Grid>
