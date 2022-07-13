@@ -1,17 +1,47 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Activity, Park } = require('../models');
 const { signToken } = require('../utils/auth');
+const { GraphQLTimestamp } = require('graphql-scalars');
 
 const resolvers = {
+  Timestamp: GraphQLTimestamp,
+
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select('-__v -password');
+        const userData = await User.findOne({ _id: context.user._id })
+        .select('-__v -password')
+        .populate({
+          path: 'activities',
+          select: '-__v',
+          populate: {
+            path: 'park',
+            select: 'name _id'
+          }
+        });
 
         return userData;
       }
 
       throw new AuthenticationError('Not logged in');
+    },
+    allActivities: async (parent, args) => {
+      const activitiesData = await Activity.find({})
+        .select('-__v')
+        .populate({
+          path: 'park',
+          select: 'name _id'
+        });
+      return activitiesData;
+    },
+    allParks: async (parent, args) => {
+      const parksData = await Park.find({})
+        .select("-__v")
+        .populate({
+          path: 'activities',
+          select: "-__v"
+        });
+      return parksData;
     },
   },
 
@@ -51,16 +81,27 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    setActivities: async (parent,  { activityData }, context) => {
+    
+    saveActivity: async (parent, { activityId }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { activities: activityData },
+          { $push: { activities: activityId } },
           { new: true }
-        );
+        )
+          .populate({
+            path: 'activities',
+            select: '-__v',
+            populate: {
+              path: 'park',
+              select: 'name _id'
+            }
+          });
 
         return updatedUser;
       }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
 
     removeBook: async (parent, { bookId }, context) => {
@@ -70,6 +111,28 @@ const resolvers = {
           { $pull: { savedBooks: { bookId } } },
           { new: true }
         );
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    removeActivity: async (parent, { activityId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { activities: activityId} },
+          { new: true }
+        )
+        .populate({
+          path: 'activities',
+          select: '-__v',
+          populate: {
+            path: 'park',
+            select: 'name _id'
+          }
+        });
 
         return updatedUser;
       }

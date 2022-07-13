@@ -10,26 +10,26 @@ import {
 } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
-import { SAVE_BOOK } from '../utils/mutations';
-import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+import { SAVE_ACTIVITY } from '../utils/mutations';
+import { saveActivityIds, getSavedActivityIds } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
 
-const SearchBooks = () => {
+const SearchActivities = () => {
   // create state for holding returned google api data
-  const [searchedBooks, setSearchedBooks] = useState([]);
+  const [searchedActivities, setSearchedActivities] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
-  // create state to hold saved bookId values
-  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  // create state to hold saved activityId values
+  const [savedActivityIds, setSavedActivityIds] = useState(getSavedActivityIds());
 
-  const [saveBook, { error }] = useMutation(SAVE_BOOK);
+  const [saveActivity, { error }] = useMutation(SAVE_ACTIVITY);
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
-    return () => saveBookIds(savedBookIds);
+    return () => saveActivityIds(savedActivityIds);
   });
 
   // create method to search for books and set state on form submit
@@ -51,15 +51,15 @@ const SearchBooks = () => {
 
       const { items } = await response.json();
 
-      const bookData = items.map((book) => ({
-        bookId: book.id,
-        authors: book.volumeInfo.authors || ['No author to display'],
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description,
-        image: book.volumeInfo.imageLinks?.thumbnail || '',
+      const activityData = items.map((activity) => ({
+        actvityId: activity.id,
+        park: activity.activityInfo.park || ['No park info to display'],
+        title: activity.activityInfo.title,
+        description: activity.activityInfo.description,
+        image: activity.activityInfo.imageLinks?.thumbnail || '',
       }));
 
-      setSearchedBooks(bookData);
+      setSearchedActivities(activityData);
       setSearchInput('');
     } catch (err) {
       console.error(err);
@@ -67,9 +67,9 @@ const SearchBooks = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveBook = async (bookId) => {
+  const handleSaveActivity = async (activityId) => {
     // find the book in `searchedBooks` state by the matching id
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    const activityToSave = searchedActivities.find((activity) => activity.activityId === activityId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -79,11 +79,11 @@ const SearchBooks = () => {
     }
 
     try {
-      const { data } = await saveBook({
-        variables: { bookData: { ...bookToSave } },
+      const { data } = await saveActivity({
+        variables: { activityData: { ...activityToSave } },
       });
-      console.log(savedBookIds);
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      console.log(savedActivityIds);
+      setSavedActivityIds([...savedActivityIds, activityToSave.activityId]);
     } catch (err) {
       console.error(err);
     }
@@ -92,7 +92,7 @@ const SearchBooks = () => {
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Search for Activities!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -117,36 +117,36 @@ const SearchBooks = () => {
 
       <Container>
         <h2>
-          {searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
-            : 'Search for a book to begin'}
+          {searchedActivities.length
+            ? `Viewing ${searchedActivities.length} results:`
+            : 'Search for a park to begin'}
         </h2>
         <CardColumns>
-          {searchedBooks.map((book) => {
+          {searchedActivities.map((activity) => {
             return (
-              <Card key={book.bookId} border="dark">
-                {book.image ? (
+              <Card key={activity.activityId} border="dark">
+                {activity.image ? (
                   <Card.Img
-                    src={book.image}
-                    alt={`The cover for ${book.title}`}
+                    src={activity.image}
+                    alt={`The image for ${activity.title}`}
                     variant="top"
                   />
                 ) : null}
                 <Card.Body>
-                  <Card.Title>{book.title}</Card.Title>
-                  <p className="small">Authors: {book.authors}</p>
-                  <Card.Text>{book.description}</Card.Text>
+                  <Card.Title>{activity.title}</Card.Title>
+                  <p className="small">Park: {activity.park}</p>
+                  <Card.Text>{activity.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={savedBookIds?.some(
-                        (savedId) => savedId === book.bookId
+                      disabled={savedActivityIds?.some(
+                        (savedId) => savedId === activity.activityId
                       )}
                       className="btn-block btn-info"
-                      onClick={() => handleSaveBook(book.bookId)}
+                      onClick={() => handleSaveActivity(activity.activityId)}
                     >
-                      {savedBookIds?.some((savedId) => savedId === book.bookId)
-                        ? 'Book Already Saved!'
-                        : 'Save This Book!'}
+                      {savedActivityIds?.some((savedId) => savedId === activity.activityId)
+                        ? 'Activity Already Saved!'
+                        : 'Save This Activity!'}
                     </Button>
                   )}
                 </Card.Body>
@@ -159,4 +159,4 @@ const SearchBooks = () => {
   );
 };
 
-export default SearchBooks;
+export default SearchActivities;
