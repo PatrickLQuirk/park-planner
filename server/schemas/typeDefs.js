@@ -33,6 +33,8 @@ const typeDefs = gql`
   type Park {
     _id: ID!
     name: String!
+    description: String
+    img: String
     activities: [ActivityNonPopulated]
   }
 
@@ -48,6 +50,8 @@ const typeDefs = gql`
   type ParkNonPopulated {
     _id: ID!
     name: String!
+    description: String
+    img: String
     activities: [ID]
   }
 
@@ -71,6 +75,12 @@ const typeDefs = gql`
     title: String!,
     description: String,
     park: ID!
+  }
+
+  input ParkInput {
+    name: String!
+    description: String
+    img: String
   }
 
   type Query {

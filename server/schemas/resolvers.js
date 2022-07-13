@@ -150,10 +150,10 @@ const resolvers = {
     // Eventually the parks and activities would be queried from an external website
     // The typeDefs file would have the following mutations added to make these work:
     // addActivity(activityInput: ActivityInput!): Park
-    // addPark(name: String!): ParkNonPopulated
+    // addPark(parkInput: ParkInput!): ParkNonPopulated
 
-    // addPark: async (parent, { name }) => {
-    //   const parkData = await Park.create({name});
+    // addPark: async (parent, { parkInput }) => {
+    //   const parkData = await Park.create(parkInput);
     //   return parkData;
     // },
     // addActivity: async (parent, { activityInput }) => {
