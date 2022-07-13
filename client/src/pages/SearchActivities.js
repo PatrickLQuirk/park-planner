@@ -89,6 +89,9 @@ const SearchActivities = () => {
       console.error(err);
     }
   };
+
+  /*const ActivitiesCard = (props) => {
+    const { title, description, startTime, endTime } = props.activity; */
   return (
     <>
       <Jumbotron fluid className="text-light bg-success">
@@ -135,6 +138,7 @@ const SearchActivities = () => {
                           ? 'Activity Already Saved!'
                           : 'Save This Activity!'}
                       </Button>
+                      )}
                   </CardContent>
                 </Card>
               </Grid>
