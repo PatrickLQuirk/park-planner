@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-//import hiker from '../../assets/hiker.jpeg';
+import hiker from '../assets/hiker.jpeg';
 import { Typography, Button, Container } from '@mui/material';
 import Box from '@mui/material/Box';
 
@@ -28,7 +28,7 @@ const Banner = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={6} style={verticalCenter} >
-                    <img style={{ width: '350px' }} /*src={hiker}*/ alt="" />
+                    <img style={{ width: '350px' }} src={hiker} alt="" />
                 </Grid>
 
             </Grid>
