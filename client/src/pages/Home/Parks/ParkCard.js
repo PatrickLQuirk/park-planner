@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 const ParkCard = (props) => {
     const { name, description, img } = props.park;
@@ -24,7 +25,10 @@ const ParkCard = (props) => {
                     <Typography variant="body2" color="text.secondary">
                         {description}
                     </Typography>
-                    <Button variant="contained" style={{ backgroundColor: '#5CE7ED' }}>View Activities</Button>
+                    <br></br>
+                    <Link to="/search">
+                        <Button variant="contained" style={{ backgroundColor: '#4caf50' }}>View Activities</Button>
+                    </Link>
                 </CardContent>
             </Card>
         </Grid>

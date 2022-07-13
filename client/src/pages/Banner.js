@@ -24,11 +24,11 @@ const Banner = () => {
                         <Typography variant="h6" sx={{ my: 3, fontSize: 13, fontWeight: 300, color: 'gray' }}>
                             You don't have to spend countless hours lost in the wilderness looking for the perfect adventure, it's waiting for you here! Create your personalized intinerary for your next National Park visit.
                         </Typography>
-                        <Button variant="contained" style={{ backgroundColor: '#5CE7ED' }}>Pick a Park</Button>
+                        <Button variant="contained" style={{ backgroundColor: '#4caf50' }}>Plan My Trip</Button>
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={6} style={verticalCenter} >
-                    <img style={{ width: '350px' }} src={hiker} alt="" />
+                    <img style={{ width: '400px' }} src={hiker} alt="" />
                 </Grid>
 
             </Grid>
