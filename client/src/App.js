@@ -49,7 +49,7 @@ function App() {
               element={<Home />} 
             /> 
              <Route 
-              path="/" 
+              path="/search" 
               element={<SearchActivities />} 
             />
             <Route 

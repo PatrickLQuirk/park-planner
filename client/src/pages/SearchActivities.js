@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   Jumbotron,
   Container,
-  Col,
-  Form,
   Button,
-  Card,
-  CardColumns,
 } from 'react-bootstrap';
+
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 import { useMutation } from '@apollo/client';
 import { SAVE_ACTIVITY } from '../utils/mutations';
@@ -88,72 +89,61 @@ const SearchActivities = () => {
       console.error(err);
     }
   };
+
+  /*const ActivitiesCard = (props) => {
+    const { title, description, startTime, endTime } = props.activity; */
   return (
     <>
-      <Jumbotron fluid className="text-light bg-dark">
+      <Jumbotron fluid className="text-light bg-success">
         <Container>
-          <h1>Search for Activities!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name="searchInput"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type="text"
-                  size="lg"
-                  placeholder="Search for a book"
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
-                  Submit Search
-                </Button>
-              </Col>
-            </Form.Row>
-          </Form>
+          <Typography variant="h3">
+            Search for Activities!
+          </Typography>
+
         </Container>
       </Jumbotron>
 
       <Container>
-        <h2>
+        <Typography sx={{ fontWeight: 600, m: 5 }} variant="h4" component="div">
           {searchedActivities.length
             ? `Viewing ${searchedActivities.length} results:`
             : 'Search for a park to begin'}
-        </h2>
-        <CardColumns>
+        </Typography>
           {searchedActivities.map((activity) => {
             return (
-              <Card key={activity.activityId} border="dark">
-                {activity.image ? (
-                  <Card.Img
-                    src={activity.image}
-                    alt={`The image for ${activity.title}`}
-                    variant="top"
-                  />
-                ) : null}
-                <Card.Body>
-                  <Card.Title>{activity.title}</Card.Title>
-                  <p className="small">Park: {activity.park}</p>
-                  <Card.Text>{activity.description}</Card.Text>
-                  {Auth.loggedIn() && (
-                    <Button
-                      disabled={savedActivityIds?.some(
-                        (savedId) => savedId === activity.activityId
+              <Grid item xs={4} sm={4} md={4}>
+                <Card key={activity.activityId} sx={{ minWidth: 275, border: 0, boxShadow: 0 }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {activity.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {activity.description}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {activity.startTime}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {activity.endTime}
+                    </Typography>
+                    {Auth.loggedIn() && (
+                      <Button
+                        disabled={savedActivityIds?.some(
+                          (savedId) => savedId === activity.activityId
+                        )}
+                        className="btn-block btn-info"
+                        onClick={() => handleSaveActivity(activity.activityId)}
+                      >
+                        {savedActivityIds?.some((savedId) => savedId === activity.activityId)
+                          ? 'Activity Already Saved!'
+                          : 'Save This Activity!'}
+                      </Button>
                       )}
-                      className="btn-block btn-info"
-                      onClick={() => handleSaveActivity(activity.activityId)}
-                    >
-                      {savedActivityIds?.some((savedId) => savedId === activity.activityId)
-                        ? 'Activity Already Saved!'
-                        : 'Save This Activity!'}
-                    </Button>
-                  )}
-                </Card.Body>
-              </Card>
+                  </CardContent>
+                </Card>
+              </Grid>
             );
           })}
-        </CardColumns>
       </Container>
     </>
   );
