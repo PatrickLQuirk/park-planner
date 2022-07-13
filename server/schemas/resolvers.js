@@ -37,12 +37,17 @@ const resolvers = {
     allParks: async (parent, args) => {
       const parksData = await Park.find({})
         .select("-__v")
-        .populate({
-          path: 'activities',
-          select: "-__v"
-        });
       return parksData;
     },
+    singlePark: async (parent, { parkId }) => {
+      const parkData = await Park.findOne({ _id: parkId })
+        .select("-__v")
+        .populate({
+          path: "activities",
+          select: "-__v"
+        });
+      return parkData;
+    }
   },
 
   Mutation: {
@@ -139,6 +144,33 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
+
+    // here is the code that would be necessary to have mutations to add a park and add an activity
+    // These mutations are not protected by login, and even if they were we may not want them to be present in the final product
+    // Eventually the parks and activities would be queried from an external website
+    // The typeDefs file would have the following mutations added to make these work:
+    // addActivity(activityInput: ActivityInput!): Park
+    // addPark(name: String!): ParkNonPopulated
+
+    // addPark: async (parent, { name }) => {
+    //   const parkData = await Park.create({name});
+    //   return parkData;
+    // },
+    // addActivity: async (parent, { activityInput }) => {
+    //   const activityData = await Activity.create(activityInput);
+    //   const parkData = await Park.findOneAndUpdate(
+    //     { _id: activityInput.park },
+    //     { $push: { activities: activityData._id }},
+    //     { new: true }
+    //   )
+    //     .select('-__v')
+    //     .populate({
+    //       path: 'activities',
+    //       select: '-__v'
+    //     });
+      
+    //   return parkData;
+    // }
   },
 };
 

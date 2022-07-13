@@ -33,7 +33,22 @@ const typeDefs = gql`
   type Park {
     _id: ID!
     name: String!
-    activities: [Activity]
+    activities: [ActivityNonPopulated]
+  }
+
+  type ActivityNonPopulated {
+    _id: ID!
+    startTime: Timestamp!
+    endTime: Timestamp!
+    title: String!
+    description: String
+    park: ID!
+  }
+  
+  type ParkNonPopulated {
+    _id: ID!
+    name: String!
+    activities: [ID]
   }
 
   type Auth {
@@ -61,7 +76,8 @@ const typeDefs = gql`
   type Query {
     me: User
     allActivities: [Activity]
-    allParks: [Park]
+    allParks: [ParkNonPopulated]
+    singlePark(parkId: ID!): Park
   }
 
   type Mutation {
