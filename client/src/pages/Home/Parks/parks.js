@@ -3,12 +3,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import Park from './ParkCard';
+import ParkCard from './ParkCard';
 import arches from '../../../assets/arches.png';
 import badlands from '../../../assets/badlands.png';
 import glacier from '../../../assets/glacier.png';
 import roosevelt from '../../../assets/roosevelt.png';
-import ActivitiesCard from './ActivitiesCard';
+
 
 const parks = [
     {
@@ -46,10 +46,10 @@ const Parks = () => {
             </Typography>
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {
-                    parks.map(park => <Park
+                    parks.map(park => <ParkCard
                         key={park.name}
                         park={park}
-                    ></Park>)
+                    ></ParkCard>)
                 }
             </Grid>
         </Container>
