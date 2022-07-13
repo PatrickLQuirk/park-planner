@@ -6,6 +6,13 @@ const parkSchema = new Schema(
             type: String,
             required: true
         },
+        description: {
+            type: String
+        },
+        // the name of the image file for the park
+        img: {
+            type: String
+        },
         activities: [
             {
                 type: Schema.Types.ObjectId,

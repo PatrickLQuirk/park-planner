@@ -30,31 +30,36 @@ export const SAVE_ACTIVITY = gql`
       _id
       username
       email
-      savedActivities {
-        activityId
-        authors
-        image
-        description
+      activities {
+        _id
         title
-        link
+        description
+        startTime
+        endTime
+        park {
+          name
+          _id
+        }
       }
     }
   }
 `;
 
 export const REMOVE_ACTIVITY = gql`
-  mutation removeBook($bookId: ID!) {
-    removeBook(bookId: $bookId) {
+  mutation removeActivity($activityId: ID!) {
+    removeActivity(activityId: $activityId) {
       _id
       username
       email
-      savedBooks {
-        bookId
-        authors
-        image
-        description
+      activities {
+        _id
+        startTime
         title
-        link
+        description
+        park {
+          name
+          _id
+        }
       }
     }
   }
