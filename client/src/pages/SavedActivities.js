@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Jumbotron,
   Container,
-  CardColumns,
   Card,
   Button,
 } from 'react-bootstrap';
@@ -54,17 +53,19 @@ const SavedActivities = () => {
     <>
       <Jumbotron fluid className="text-light bg-success">
         <Container>
-          <h1>Viewing {userData.username}'s activities!</h1>
+        <Typography sx={{ fontWeight: 600, m: 5 }} variant="h4" component="div">  
+          Viewing {userData.username}'s activities!
+          </Typography>
         </Container>
       </Jumbotron>
       <Container>
-        <h2>
+      <Typography sx={{ fontWeight: 600, m: 5 }} variant="h4" component="div"> 
           {userData.savedActivities?.length
             ? `Viewing ${userData.savedActivities.length} saved ${
                 userData.savedActivities.length === 1 ? 'activity' : 'activities'
               }:`
             : 'You have no saved activities!'}
-        </h2>
+        </Typography>
         <Grid item xs={4} sm={4} md={4}>
                 <Card key={activity.activityId} sx={{ minWidth: 275, border: 0, boxShadow: 0 }}>
                   <CardContent>
