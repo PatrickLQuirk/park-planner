@@ -16,7 +16,7 @@ import Auth from '../utils/auth';
 
 const SavedActivities = () => {
   const { loading, data } = useQuery(QUERY_ME);
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+  const [removeActivity, { error }] = useMutation(REMOVE_ACTIVITY);
 
   const userData = data?.me || {};
 
