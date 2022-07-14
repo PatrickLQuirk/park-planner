@@ -35,8 +35,8 @@ export const QUERY_ALL_PARKS = gql`
 `;
 
 export const QUERY_SINGLE_PARK = gql`
-  query SinglePark {
-    singlePark(parkId: ID!) {
+  query singlePark ($parkId: ID!) {
+    singlePark(parkId: $parkId) {
       _id
       name
       description

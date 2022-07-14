@@ -59,14 +59,14 @@ const SavedActivities = () => {
       </Jumbotron>
       <Container>
         <Typography sx={{ fontWeight: 600, m: 5 }} variant="h4" component="div">
-          {userData.savedActivities?.length
-            ? `Viewing ${userData.savedActivities.length} saved ${userData.savedActivities.length === 1 ? 'activity' : 'activities'
+          {userData.activities?.length
+            ? `Viewing ${userData.activities.length} saved ${userData.activities.length === 1 ? 'activity' : 'activities'
             }:`
             : 'You have no saved activities!'}
         </Typography>
-        {savedActivities.map((activity) => {
+        {userData.activities.map((activity) => {
           return(
-        <Grid  key={activity.activityId} item xs={4} sm={4} md={4}>
+        <Grid  key={activity._id} item xs={4} sm={4} md={4}>
           <Card sx={{ minWidth: 275, border: 0, boxShadow: 0 }}>
             <CardContent>
               <Typography variant="h5" component="div">
@@ -84,7 +84,7 @@ const SavedActivities = () => {
               {Auth.loggedIn() && (
                 <Button
                   className="btn-block btn-danger"
-                  onClick={() => handleDeleteActivity(activity.activityId)}
+                  onClick={() => handleDeleteActivity(activity._id)}
                 >
                   Delete this Activity!
                 </Button>

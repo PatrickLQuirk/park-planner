@@ -25,8 +25,8 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_ACTIVITY = gql`
-  mutation saveActivity($activityData: ActivityInput!) {
-    saveActivity(activityData: $activityData) {
+  mutation saveActivity($activityId: ID!) {
+    saveActivity(activityId: $activityId) {
       _id
       username
       email
