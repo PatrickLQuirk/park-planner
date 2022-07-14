@@ -76,10 +76,10 @@ const SavedActivities = () => {
                 {activity.description}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {activity.startTime}
+                Starts at {activity.startTime}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {activity.endTime}
+                Ends at {activity.endTime}
               </Typography>
               {Auth.loggedIn() && (
                 <Button
