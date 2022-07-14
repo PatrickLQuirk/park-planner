@@ -12,6 +12,7 @@ import SearchActivities from './pages/SearchActivities';
 import SavedActivities from './pages/SavedActivities';
 import Navbar from './components/Navbar';
 import Home from './pages/Home/Home';
+import Footer from './components/Footer'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -61,6 +62,7 @@ function App() {
               element={<h1 className="display-2">Wrong page!</h1>} 
             />
           </Routes>
+          <Footer />
         </>
       </Router>
     </ApolloProvider>
