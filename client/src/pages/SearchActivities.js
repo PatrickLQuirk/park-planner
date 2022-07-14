@@ -4,23 +4,23 @@ import {
   Container,
   Button,
 } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { format, toDate } from 'date-fns';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_PARK } from '../utils/queries';
 import { SAVE_ACTIVITY } from '../utils/mutations';
 import { saveActivityIds, getSavedActivityIds } from '../utils/localStorage';
+import { format, toDate } from 'date-fns';
 
 import Auth from '../utils/auth';
 
 const SearchActivities = () => {
-  // create state for holding returned api data
-  // const [searchedActivities, setSearchedActivities] = useState([]);
+  const { id: parkId } = useParams();
 
   // create state to hold saved activityId values
   const [savedActivityIds, setSavedActivityIds] = useState(getSavedActivityIds());
@@ -34,7 +34,7 @@ const SearchActivities = () => {
   });
 
   // this query is hardcoded currently. This will need to change before deployment
-  const { loading, data } = useQuery(QUERY_SINGLE_PARK, { variables: { parkId: "62cf4431e4b3c35326b12868" } })
+  const { loading, data } = useQuery(QUERY_SINGLE_PARK, { variables: { parkId: parkId } })
 
   const activitiesData = data?.singlePark.activities || [];
 

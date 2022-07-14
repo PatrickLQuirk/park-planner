@@ -8,14 +8,14 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 const ParkCard = (props) => {
-    const { name, description, img } = props.park;
+    const { name, description, img, _id } = props.park;
     return (
         <Grid item xs={4} sm={4} md={4}>
             <Card sx={{ minWidth: 275, border: 0, boxShadow: 0 }}>
                 <CardMedia
                     component="img"
                     style={{ width: 'auto', height: '80px', margin: '0 auto' }}
-                    image={img}
+                    image={require(`../assets/${img}`)}
                     alt="green iguana"
                 />
                 <CardContent>
@@ -26,7 +26,7 @@ const ParkCard = (props) => {
                         {description}
                     </Typography>
                     <br></br>
-                    <Link to="/search">
+                    <Link to={`/search/${_id}`}>
                         <Button variant="contained" style={{ backgroundColor: '#4caf50' }}>View Activities</Button>
                     </Link>
                 </CardContent>
