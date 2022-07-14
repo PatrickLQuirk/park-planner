@@ -15,7 +15,7 @@ const ParkCard = (props) => {
                 <CardMedia
                     component="img"
                     style={{ width: 'auto', height: '80px', margin: '0 auto' }}
-                    image={require(`../assets/${img}`)}
+                    image={img}
                     alt="green iguana"
                 />
                 <CardContent>
