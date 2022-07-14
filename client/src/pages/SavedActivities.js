@@ -14,6 +14,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { REMOVE_ACTIVITY } from '../utils/mutations';
 import { removeActivityId } from '../utils/localStorage';
+import { format, toDate } from 'date-fns';
 
 import Auth from '../utils/auth';
 
@@ -65,6 +66,10 @@ const SavedActivities = () => {
             : 'You have no saved activities!'}
         </Typography>
         {userData.activities.map((activity) => {
+          const startTime = toDate(activity.startTime);
+          const startTimeString = format(startTime, 'PPPPpppp');
+          const endTime = toDate(activity.endTime);
+          const endTimeString = format(endTime, 'PPPPpppp');
           return(
         <Grid  key={activity._id} item xs={4} sm={4} md={4}>
           <Card sx={{ minWidth: 275, border: 0, boxShadow: 0 }}>
@@ -76,10 +81,10 @@ const SavedActivities = () => {
                 {activity.description}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Starts at {activity.startTime}
+                Starts at {startTimeString}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Ends at {activity.endTime}
+                Ends at {endTimeString}
               </Typography>
               {Auth.loggedIn() && (
                 <Button

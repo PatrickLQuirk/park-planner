@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { format, toDate } from 'date-fns';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_PARK } from '../utils/queries';
@@ -81,6 +82,10 @@ const SearchActivities = () => {
             : 'Search for a park to begin'}
         </Typography>
           {activitiesData.map((activity) => {
+            const startTime = toDate(activity.startTime);
+            const startTimeString = format(startTime, 'PPPPpppp');
+            const endTime = toDate(activity.endTime);
+            const endTimeString = format(endTime, 'PPPPpppp');
             return (
               <Grid item key={activity._id} xs={4} sm={4} md={4}>
                 <Card sx={{ minWidth: 275, border: 0, boxShadow: 0 }}>
@@ -92,10 +97,10 @@ const SearchActivities = () => {
                       {activity.description}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Starts at {activity.startTime}
+                      Starts at {startTimeString}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Ends at {activity.endTime}
+                      Ends at {endTimeString}
                     </Typography>
                     {Auth.loggedIn() && (
                       <Button
