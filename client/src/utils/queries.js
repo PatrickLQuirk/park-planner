@@ -23,7 +23,7 @@ export const QUERY_ME = gql`
 
 // this query does not return the actual activity data, just the ids.
 export const QUERY_ALL_PARKS = gql`
-  query AllParks {
+  query allParks {
     allParks {
       _id
       name

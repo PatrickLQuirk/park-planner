@@ -49,7 +49,7 @@ function App() {
               element={<Home />} 
             /> 
              <Route 
-              path="/search" 
+              path="/search/:id" 
               element={<SearchActivities />} 
             />
             <Route 

@@ -4,6 +4,7 @@ import {
   Container,
   Button,
 } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -14,12 +15,12 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_PARK } from '../utils/queries';
 import { SAVE_ACTIVITY } from '../utils/mutations';
 import { saveActivityIds, getSavedActivityIds } from '../utils/localStorage';
+import { format, toDate } from 'date-fns';
 
 import Auth from '../utils/auth';
 
 const SearchActivities = () => {
-  // create state for holding returned api data
-  // const [searchedActivities, setSearchedActivities] = useState([]);
+  const { id: parkId } = useParams();
 
   // create state to hold saved activityId values
   const [savedActivityIds, setSavedActivityIds] = useState(getSavedActivityIds());
@@ -33,7 +34,7 @@ const SearchActivities = () => {
   });
 
   // this query is hardcoded currently. This will need to change before deployment
-  const { loading, data } = useQuery(QUERY_SINGLE_PARK, { variables: { parkId: "62cf4431e4b3c35326b12868" } })
+  const { loading, data } = useQuery(QUERY_SINGLE_PARK, { variables: { parkId: parkId } })
 
   const activitiesData = data?.singlePark.activities || [];
 
@@ -81,6 +82,10 @@ const SearchActivities = () => {
             : 'Search for a park to begin'}
         </Typography>
           {activitiesData.map((activity) => {
+            const startTime = toDate(activity.startTime);
+            const startTimeString = format(startTime, 'PPPPpppp');
+            const endTime = toDate(activity.endTime);
+            const endTimeString = format(endTime, 'PPPPpppp');
             return (
               <Grid item key={activity._id} xs={4} sm={4} md={4}>
                 <Card sx={{ minWidth: 275, border: 0, boxShadow: 0 }}>
@@ -92,10 +97,10 @@ const SearchActivities = () => {
                       {activity.description}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Starts at {activity.startTime}
+                      Starts at {startTimeString}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Ends at {activity.endTime}
+                      Ends at {endTimeString}
                     </Typography>
                     {Auth.loggedIn() && (
                       <Button
