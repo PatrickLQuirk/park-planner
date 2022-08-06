@@ -10,7 +10,7 @@ Users can create an account and login, select a park to view activities for that
 If the user has already done an activity or changed their mind about it, they can remove it from their saved activities.
 The parks and activities are pulled from a MongoDB database, and the user accounts and lists of saved activities are stored in that database.
 
-## Usage
-To use the application, navigate to the following link in your browser (Link)
+![Website](park-planner.png)
 
-(Screenshot)
+## Usage
+To use the application, navigate to the following link in your browser: https://limitless-caverns-87723.herokuapp.com/
